@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 @SuppressWarnings("deprecation")
 public class ChatListener implements Listener {
@@ -36,7 +38,9 @@ public class ChatListener implements Listener {
 		Location pLoc = p.getLocation();
 		
 		String m = ruChat.cfg.getString("private-chat-format");
-		m = m.replaceAll("$player", p.getDisplayName()).replaceAll("$msg", msg);
+		PermissionUser user = PermissionsEx.getPermissionManager().getUser(p);
+                String worldName = p.getWorld().getName();
+                m = m.replaceAll("$player", p.getDisplayName()).replaceAll("$msg", msg).replaceAll("$prefix", user.getPrefix(worldName).replaceAll("$suffix", user.getSuffix(worldName)));
 		
 		double range = Math.pow(ruChat.cfg.getInt("private-range"), 2);
 		
