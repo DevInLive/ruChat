@@ -60,7 +60,7 @@ public class ruChat extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		
+		this.log("Disabled!");
 	}
 	
 	private void log(String msg) {

@@ -1,5 +1,6 @@
 package ru.cubelife.chat;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,6 +22,8 @@ public class CommandsExecutor implements CommandExecutor {
 			Utils.changeMode((Player) sender, ChatMode.SALE);
 		} else if(cmdName.equalsIgnoreCase("help") || cmdName.equalsIgnoreCase("h")) {
 			Utils.changeMode((Player) sender, ChatMode.HELP);
+		} else if(cmdName.equalsIgnoreCase("chat")) {
+			sender.sendMessage(ChatColor.RED + "Создатели: Mayor, smilesdc. DevInLive.");
 		}
 		return false;
 	}
