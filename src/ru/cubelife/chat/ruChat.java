@@ -1,9 +1,12 @@
 package ru.cubelife.chat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -38,6 +41,20 @@ public class ruChat extends JavaPlugin {
 		this.pl = getServer().getPluginManager();
 		
 		this.pl.registerEvents(new ChatListener(), this);
+		
+		List<PluginCommand> cmds = new ArrayList<PluginCommand>();
+		
+		cmds.add(getCommand("global")); cmds.add(getCommand("g"));
+		cmds.add(getCommand("private")); cmds.add(getCommand("p"));
+		cmds.add(getCommand("sale")); cmds.add(getCommand("s"));
+		cmds.add(getCommand("help")); cmds.add(getCommand("h"));
+		cmds.add(getCommand("chat"));
+		
+		CommandsExecutor ex = new CommandsExecutor();
+		
+		for(PluginCommand cmd : cmds) {
+			cmd.setExecutor(ex);
+		}
 		
 		this.log("Enabled!");
 	}
