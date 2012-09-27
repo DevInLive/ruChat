@@ -46,7 +46,7 @@ public class Utils {
 	}
 	
 	public static void helpMessage(Player p, String msg) {
-		String m = ruChat.cfg.getString("private-chat-format");
+		String m = ruChat.cfg.getString("help-chat-format");
 		m = replaceSpecials(m, msg, p);
 		for(Player r : Bukkit.getOnlinePlayers()) {
 			if(ruChat.modes.get(r) == ChatMode.HELP || r.hasPermission("ruchat.help")) {
@@ -56,16 +56,30 @@ public class Utils {
 	}
 	
 	public static void changeMode(Player p, ChatMode cm) {
-		ruChat.modes.remove(p);
+		if(ruChat.modes.containsKey(p)) {
+			ruChat.modes.remove(p);
+		}
 		ruChat.modes.put(p, cm);
 		p.sendMessage(ChatColor.AQUA + "Режим чата успешно изменен!");
 	}
 	
 	public static String replaceSpecials(String s, String msg, Player p) {
         String worldName = p.getWorld().getName();
-		PermissionUser user = PermissionsEx.getPermissionManager().getUser(p);
-		s = s.replaceAll("$player", p.getDisplayName()).replaceAll("$world", worldName).replaceAll("$msg", msg).replaceAll("$prefix", user.getPrefix(worldName).replaceAll("$suffix", user.getSuffix(worldName)));
+        if(ruChat.usePex) {
+        	PermissionUser user = PermissionsEx.getPermissionManager().getUser(p);
+        	s = s.replaceAll("$player", p.getDisplayName()).replaceAll("$world", worldName).replaceAll("$msg", msg).replaceAll("$prefix", user.getPrefix(worldName).replaceAll("$suffix", user.getSuffix(worldName)));
+        } else {
+        	s = s.replaceAll("$player", p.getDisplayName()).replaceAll("$world", worldName).replaceAll("$msg", msg).replaceAll("$prefix", "").replaceAll("$suffix", "");
+        }
 		return s;
+	}
+	
+	public static String sMsg(String[] m) {
+		String msg = "";
+		for(String w : m) {
+			msg += w;
+		}
+		return msg;
 	}
 
 }

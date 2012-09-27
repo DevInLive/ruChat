@@ -1,0 +1,16 @@
+name: ruChat
+version: 0.1a
+author: [Mayor, smilesdc]
+website: github.com/ruChat
+main: ru.cubelife.chat.ruChat
+softdepend: [PermissionsEx]
+commands:
+ global:
+ g:
+ private:
+ p:
+ sale:
+ s:
+ help:
+ h:
+ chat:

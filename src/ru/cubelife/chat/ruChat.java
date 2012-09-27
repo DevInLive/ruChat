@@ -1,6 +1,7 @@
 package ru.cubelife.chat;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ruChat extends JavaPlugin {
+	
+	/** Используется ли PEX */
+	public static boolean usePex;
 	
 	/** Режимы чата игроков */
 	public static HashMap<Player, ChatMode> modes;
@@ -34,11 +38,17 @@ public class ruChat extends JavaPlugin {
 		this.f = new File(getDataFolder(), "config.yml");
 		ruChat.cfg = YamlConfiguration.loadConfiguration(f);
 		this.loadCfg();
-		this.saveCfg();
+		
+		ruChat.modes = new HashMap<Player, ChatMode>();
 		
 		this.log = Logger.getLogger("Minecraft");
 		
 		this.pl = getServer().getPluginManager();
+		
+		ruChat.usePex = false;
+		if(pl.getPlugin("PermissionsEx") != null) {
+			ruChat.usePex = true;
+		}
 		
 		this.pl.registerEvents(new ChatListener(), this);
 		
@@ -68,11 +78,16 @@ public class ruChat extends JavaPlugin {
 	}
 	
 	private void loadCfg() {
-		
-	}
-	
-	private void saveCfg() {
-		
+		ruChat.cfg.set("private-chat-format", ruChat.cfg.getString("private-chat-format", "$prefix$player$suffix: $msg"));
+		ruChat.cfg.set("private-chat-range" ,ruChat.cfg.getInt("private-chat-range", 150));
+		ruChat.cfg.set("global-chat-format", ruChat.cfg.getString("global-chat-format", "[G] $prefix$player$suffix: $msg"));
+		ruChat.cfg.set("sale-chat-format", ruChat.cfg.getString("sale-chat-format", "[SALE] $prefix$player$suffix: $msg"));
+		ruChat.cfg.set("help-chat-format", ruChat.cfg.getString("help-chat-format", "[HELP] $prefix$player$suffix: $msg"));
+		try {
+			ruChat.cfg.save(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
