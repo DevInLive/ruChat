@@ -18,15 +18,16 @@ public class Utils {
 		
 		double range = Math.pow(ruChat.cfg.getInt("private-chat-range"), 2);
 		
-		int i = 0;
 		for(Player r : Bukkit.getOnlinePlayers()) {
+			if(r == p) {
+				continue;
+			}
 			if(pLoc.distanceSquared(r.getLocation()) < range) {
 				r.sendMessage(m);
-				i++;
 			}
 		}
 		
-		p.sendMessage(ChatColor.BLUE + "(" + i + ") " + ChatColor.WHITE + m);
+		p.sendMessage(m);
 	}
 	
 	public static void globalMessage(Player p, String msg) {
@@ -64,12 +65,13 @@ public class Utils {
 	}
 	
 	public static String replaceSpecials(String s, String msg, Player p) {
+		s = translateColor(s);
         String worldName = p.getWorld().getName();
         if(ruChat.usePex) {
         	PermissionUser user = PermissionsEx.getPermissionManager().getUser(p);
-        	s = s.replaceAll("$player", p.getDisplayName()).replaceAll("$world", worldName).replaceAll("$msg", msg).replaceAll("$prefix", user.getPrefix(worldName).replaceAll("$suffix", user.getSuffix(worldName)));
+        	s = s.replace("$player", p.getDisplayName()).replace("$world", worldName).replace("$msg", msg).replace("$prefix", user.getPrefix(worldName).replace("$suffix", user.getSuffix(worldName)));
         } else {
-        	s = s.replaceAll("$player", p.getDisplayName()).replaceAll("$world", worldName).replaceAll("$msg", msg).replaceAll("$prefix", "").replaceAll("$suffix", "");
+        	s = s.replace("$player", p.getDisplayName()).replace("$world", worldName).replace("$msg", msg).replace("$prefix", "").replace("$suffix", "");
         }
 		return s;
 	}
@@ -80,6 +82,11 @@ public class Utils {
 			msg += w;
 		}
 		return msg;
+	}
+	
+	public static String translateColor(String s) {
+		s = ChatColor.translateAlternateColorCodes('&', s);
+		return s;
 	}
 
 }

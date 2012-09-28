@@ -26,15 +26,22 @@ public class ChatListener implements Listener {
 		ChatMode cm = ruChat.modes.get(p);
 		boolean g = event.getMessage().startsWith("!");
 		boolean s = event.getMessage().startsWith("@");
-		if(cm == ChatMode.PRIVATE && !(g || s)) {
+		if(cm == null || (cm == ChatMode.PRIVATE && !(g || s))) {
+			if(g) {
+				event.setMessage(event.getMessage().substring(1));
+			}
 			Utils.privateMessage(p, event.getMessage());
 		} else if(cm == ChatMode.GLOBAL || g) {
+			if(s) {
+				event.setMessage(event.getMessage().substring(1));
+			}
 			Utils.globalMessage(p, event.getMessage());
 		} else if(cm == ChatMode.SALE || s) {
 			Utils.saleMessage(p, event.getMessage());
 		} else if(cm == ChatMode.HELP) {
 			Utils.helpMessage(p, event.getMessage());
 		}
+		event.getRecipients().clear();
 	}
 
 }

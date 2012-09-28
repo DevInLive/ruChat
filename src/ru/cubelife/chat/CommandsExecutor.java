@@ -49,10 +49,6 @@ public class CommandsExecutor implements CommandExecutor {
 				Utils.changeMode((Player) sender, ChatMode.HELP);
 				((Player)sender).chat(Utils.sMsg(args));
 				return true;
-			} else if(cmdName.equalsIgnoreCase("chat")) {
-				sender.sendMessage(ChatColor.RED + "Создатели: Mayor, smilesdc. DevInLive.");
-				((Player)sender).chat(Utils.sMsg(args));
-				return true;
 			}
 		}
 		return false;

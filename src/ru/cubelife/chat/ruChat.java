@@ -80,9 +80,9 @@ public class ruChat extends JavaPlugin {
 	private void loadCfg() {
 		ruChat.cfg.set("private-chat-format", ruChat.cfg.getString("private-chat-format", "$prefix$player$suffix: $msg"));
 		ruChat.cfg.set("private-chat-range" ,ruChat.cfg.getInt("private-chat-range", 150));
-		ruChat.cfg.set("global-chat-format", ruChat.cfg.getString("global-chat-format", "[G] $prefix$player$suffix: $msg"));
-		ruChat.cfg.set("sale-chat-format", ruChat.cfg.getString("sale-chat-format", "[SALE] $prefix$player$suffix: $msg"));
-		ruChat.cfg.set("help-chat-format", ruChat.cfg.getString("help-chat-format", "[HELP] $prefix$player$suffix: $msg"));
+		ruChat.cfg.set("global-chat-format", ruChat.cfg.getString("global-chat-format", "&a[G] &f$prefix$player$suffix: &b$msg"));
+		ruChat.cfg.set("sale-chat-format", ruChat.cfg.getString("sale-chat-format", "&e[&5SALE&e] &f$prefix$player$suffix: &6$msg"));
+		ruChat.cfg.set("help-chat-format", ruChat.cfg.getString("help-chat-format", "&7[HELP] &f$prefix$player$suffix: &o$msg"));
 		try {
 			ruChat.cfg.save(f);
 		} catch (IOException e) {
