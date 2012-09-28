@@ -22,6 +22,9 @@ public class Utils {
 			if(r == p) {
 				continue;
 			}
+			if(r.getWorld() != p.getWorld()) {
+				continue;
+			}
 			if(pLoc.distanceSquared(r.getLocation()) < range) {
 				r.sendMessage(m);
 			}
